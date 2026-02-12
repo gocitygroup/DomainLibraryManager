@@ -68,30 +68,47 @@ function createServerConfig(env: Record<string, string>): ServerOptions {
   };
 }
 
+type BuildTarget = 'app' | 'lib';
+
+function getBuildTarget(env: Record<string, string>): BuildTarget {
+  // Default to an application build (emits dist/index.html), which is what Vercel needs.
+  // Opt into library mode only when explicitly requested.
+  const explicit = (env.VITE_BUILD_TARGET || process.env.BUILD_TARGET || '').toLowerCase();
+  return explicit === 'lib' ? 'lib' : 'app';
+}
+
 export default defineConfig(({ mode }) => {
   // Load environment variables
   const env = loadEnv(mode, process.cwd(), '');
   const serverConfig = createServerConfig(env);
+  const buildTarget = getBuildTarget(env);
 
   return {
     plugins: [react()],
-    build: {
-      lib: {
-        entry: resolve(__dirname, 'src/index.ts'),
-        name: 'ProgrammingLanguageManager',
-        fileName: 'index',
-        formats: ['es', 'umd']
-      },
-      rollupOptions: {
-        external: ['react', 'react-dom'],
-        output: {
-          globals: {
-            react: 'React',
-            'react-dom': 'ReactDOM'
+    build:
+      buildTarget === 'lib'
+        ? {
+            // Library build (opt-in): used when publishing/consuming as a component library.
+            lib: {
+              entry: resolve(__dirname, 'src/index.ts'),
+              name: 'ProgrammingLanguageManager',
+              fileName: 'index',
+              formats: ['es', 'umd'],
+            },
+            rollupOptions: {
+              external: ['react', 'react-dom'],
+              output: {
+                globals: {
+                  react: 'React',
+                  'react-dom': 'ReactDOM',
+                },
+              },
+            },
           }
-        }
-      }
-    },
+        : {
+            // Application build (default): emits dist/index.html for static hosting (e.g. Vercel).
+            outDir: 'dist',
+          },
     optimizeDeps: {
       exclude: ['lucide-react']
     },

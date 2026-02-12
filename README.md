@@ -48,6 +48,17 @@ For more detailed configuration options, see [CONFIGURATION.md](CONFIGURATION.md
 
 ## 🚢 Deployment Options
 
+### Vercel (Static Hosting)
+
+This project can be deployed to Vercel as a static Vite application.
+
+- **Framework Preset**: Vite
+- **Install Command**: `npm install`
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+
+Note: `vite.config.ts` defaults to an **application build** (emits `dist/index.html`) which is required for Vercel. If you ever need the previous **library build** output, set `VITE_BUILD_TARGET=lib` (or `BUILD_TARGET=lib`) before running `npm run build`.
+
 ### Development with Docker
 
 ```bash
