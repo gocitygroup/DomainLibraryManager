@@ -34,7 +34,6 @@ function ProgrammingLanguageManager({
   onLanguageUpdate,
   onLanguageDelete,
   onSpaceChange,
-  allowedOrigins = ['*']
 }: ProgrammingLanguageManagerProps) {
   // Initialize CORS hook
   useCors();
@@ -210,12 +209,14 @@ function ProgrammingLanguageManager({
 
   return (
     <div className={`min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200 ${className}`}>
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex justify-end mb-3 sm:mb-4">
+            <ThemeToggle />
+          </div>
           <Header onAddClick={() => setShowAddForm(true)} />
         </div>
-        
-        <ThemeToggle />
+
         <SpaceSelector
           spaces={spaces}
           activeSpace={activeSpace}

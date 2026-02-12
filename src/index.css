@@ -3,6 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+  }
+}
+
 @layer components {
   .card {
     @apply bg-card text-card-foreground rounded-xl shadow-md hover:shadow-lg 

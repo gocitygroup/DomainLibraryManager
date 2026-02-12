@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pencil, Trash2, Code2, BookOpen, Briefcase, PiggyBank, Rocket } from 'lucide-react';
+import { Pencil, Trash2, Code2, Rocket } from 'lucide-react';
 import { ProgrammingLanguage } from '../../types/language';
 import { Badge } from './Badge';
 import { LanguageForm } from '../Forms/LanguageForm';

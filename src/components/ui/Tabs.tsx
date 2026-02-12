@@ -16,17 +16,19 @@ export function Tabs({ tabs, defaultTab }: TabsProps) {
 
   return (
     <div className="w-full">
-      <div className="border-b border-gray-200 dark:border-gray-700">
-        <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+      <div className="rounded-xl border border-gray-200/70 dark:border-gray-700/70 bg-gray-50/70 dark:bg-gray-900/20 p-1">
+        <nav className="flex gap-1 overflow-x-auto scroll-smooth" aria-label="Tabs">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`
-                whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200
+                flex-none whitespace-nowrap px-3 py-2 rounded-lg text-sm font-semibold transition-colors duration-200
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white
+                dark:focus-visible:ring-offset-gray-800
                 ${activeTab === tab.id
-                  ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                  ? 'bg-white dark:bg-gray-800 text-blue-700 dark:text-blue-300 shadow-sm ring-1 ring-gray-200/80 dark:ring-gray-700/80'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-gray-100'
                 }
               `}
             >
@@ -35,7 +37,7 @@ export function Tabs({ tabs, defaultTab }: TabsProps) {
           ))}
         </nav>
       </div>
-      <div className="mt-6">
+      <div className="mt-4 sm:mt-6">
         {tabs.find(tab => tab.id === activeTab)?.content}
       </div>
     </div>

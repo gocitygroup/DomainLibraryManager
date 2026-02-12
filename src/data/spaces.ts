@@ -1,5 +1,4 @@
 import { InnovationArea, TechnologyDomain, Space } from '../types/spaces';
-import { programmingLanguages } from './languages';
 
 export const spaces: Space[] = [
   {
