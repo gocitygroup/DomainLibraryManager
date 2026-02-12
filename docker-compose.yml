@@ -1,0 +1,47 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "9876:${VITE_APP_PORT:-3000}"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_APP_HOST=${VITE_APP_HOST:-0.0.0.0}
+      - VITE_APP_PORT=${VITE_APP_PORT:-3000}
+      - VITE_APP_ALLOWED_ORIGINS=${VITE_APP_ALLOWED_ORIGINS:-*}
+      - VITE_APP_ALLOWED_IPS=${VITE_APP_ALLOWED_IPS:-*}
+      - VITE_APP_VPN_ENABLED=${VITE_APP_VPN_ENABLED:-false}
+      - DOCKER_CONTAINER=true
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:${VITE_APP_PORT:-3000}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9877:${VITE_APP_PORT:-3000}"
+    environment:
+      - NODE_ENV=production
+      - VITE_APP_HOST=${VITE_APP_HOST:-0.0.0.0}
+      - VITE_APP_PORT=${VITE_APP_PORT:-3000}
+      - VITE_APP_ALLOWED_ORIGINS=${VITE_APP_ALLOWED_ORIGINS:-*}
+      - VITE_APP_ALLOWED_IPS=${VITE_APP_ALLOWED_IPS:-*}
+      - VITE_APP_VPN_ENABLED=${VITE_APP_VPN_ENABLED:-false}
+      - VITE_APP_SECURITY_HEADERS_ENABLED=true
+      - DOCKER_CONTAINER=true
+    command: npm run serve
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:${VITE_APP_PORT:-3000}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

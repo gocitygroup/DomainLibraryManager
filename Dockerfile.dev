@@ -1,0 +1,19 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY . .
+
+# Default port fallback (will be overridden by environment variables)
+ARG PORT=3000
+ENV PORT=$PORT
+ENV DOCKER_CONTAINER=true
+
+# Expose port
+EXPOSE $PORT
+
+# Run the development server
+CMD ["npm", "run", "dev"]
