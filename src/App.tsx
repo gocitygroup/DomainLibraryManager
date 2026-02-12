@@ -9,7 +9,7 @@ import { SearchBar } from './components/Search/SearchBar';
 import { LanguageCard } from './components/LanguageCard/LanguageCard';
 import { LanguageForm } from './components/Forms/LanguageForm';
 import { Modal } from './components/Modal/Modal';
-import { Filter, SlidersHorizontal } from 'lucide-react';
+import { ArrowLeft, Filter, SlidersHorizontal } from 'lucide-react';
 import { SpaceSelector } from './components/Spaces/SpaceSelector';
 import { InnovationSpace } from './components/Spaces/InnovationSpace';
 import { TechnologySpace } from './components/Spaces/TechnologySpace';
@@ -37,6 +37,11 @@ function ProgrammingLanguageManager({
 }: ProgrammingLanguageManagerProps) {
   // Initialize CORS hook
   useCors();
+
+  const MAIN_SITE_URL = 'https://gocitygroup.org';
+  const showMainSiteFloatingTab =
+    typeof window !== 'undefined' &&
+    window.location.hostname === 'tech.gocitygroup.org';
 
   const [activeSpace, setActiveSpace] = useState('programming');
   const [search, setSearch] = useState('');
@@ -209,6 +214,31 @@ function ProgrammingLanguageManager({
 
   return (
     <div className={`min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200 ${className}`}>
+      {showMainSiteFloatingTab && (
+        <a
+          href={MAIN_SITE_URL}
+          className="fixed z-50 left-4 bottom-4 sm:left-0 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2
+                     inline-flex items-center gap-2 px-3 py-2 sm:py-2.5
+                     rounded-xl sm:rounded-l-none sm:rounded-r-2xl
+                     border border-gray-200/70 dark:border-gray-700/70
+                     bg-white/90 dark:bg-gray-800/90 backdrop-blur
+                     text-gray-800 dark:text-gray-100 shadow-lg shadow-black/10 dark:shadow-black/30
+                     hover:bg-white hover:text-gray-900 dark:hover:bg-gray-800
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gocity-blue-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50
+                     dark:focus-visible:ring-offset-gray-900"
+          aria-label="Back to GoCityGroup main website"
+          title="Back to GoCityGroup"
+        >
+          <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-gocity-blue-600 dark:text-gocity-blue-400" />
+          <span className="text-sm font-semibold whitespace-nowrap">
+            Gocity Group
+          </span>
+          <span className="hidden sm:inline text-sm text-gray-600 dark:text-gray-300">
+            Main site
+          </span>
+        </a>
+      )}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="mb-6 sm:mb-8">
           <div className="flex justify-end mb-3 sm:mb-4">
