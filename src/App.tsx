@@ -4,6 +4,7 @@ import { spaces, innovationAreas, technologyDomains } from './data/spaces';
 import { ProgrammingLanguage } from './types/language';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useCors } from './hooks/useCors';
+import { Analytics } from '@vercel/analytics/react';
 import { Header } from './components/Layout/Header';
 import { SearchBar } from './components/Search/SearchBar';
 import { LanguageCard } from './components/LanguageCard/LanguageCard';
@@ -262,6 +263,7 @@ function ProgrammingLanguageManager({
           />
         </Modal>
       </div>
+      <Analytics />
     </div>
   );
 }
